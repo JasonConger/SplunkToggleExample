@@ -1,0 +1,32 @@
+<dashboard stylesheet="toggle.css" script="toggle.js">
+  <label>Toggle Simple XML</label>
+
+  <searchTemplate>
+    index=_internal earliest=-15m@m latest=now | stats count by _time source
+  </searchTemplate>
+
+  <row>
+    <single id="single">
+      <title>Source Count</title>
+      <searchPostProcess>
+	stats dc(source) AS Sources
+      </searchPostProcess>
+      <option name="underLabel">Sources</option>
+    </single>
+  </row>
+  
+  <row>
+    <chart id="chart">
+      <searchPostProcess>
+	timechart count(source) AS Sources
+      </searchPostProcess>
+    </chart>
+  </row>
+  
+  <row>
+    <html>
+      <p>Here is some HTML to show how the toggle expands between rows.</p>
+    </html>
+  </row>
+  
+</dashboard>
