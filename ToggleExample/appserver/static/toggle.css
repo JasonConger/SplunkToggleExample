@@ -1,5 +1,5 @@
-.dashboard-row2 {
-    visibility: hidden;
+#chart1 {
+    /*visibility: hidden;*/
     height: 0px;
     overflow: hidden;
 }

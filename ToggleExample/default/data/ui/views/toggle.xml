@@ -1,32 +1,64 @@
-<dashboard stylesheet="toggle.css" script="toggle.js">
+<form stylesheet="toggle.css" script="toggle.js">
   <label>Toggle Simple XML</label>
-
-  <searchTemplate>
-    index=_internal earliest=-15m@m latest=now | stats count by _time source
-  </searchTemplate>
-
+  <search id="global">
+    <query>
+      index=_internal earliest=-15m@m latest=now | stats count by _time source
+    </query>
+  </search>
+  <fieldset submitButton="false" autoRun="false">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
   <row>
-    <single id="single">
-      <title>Source Count</title>
-      <searchPostProcess>
-	stats dc(source) AS Sources
-      </searchPostProcess>
-      <option name="underLabel">Sources</option>
-    </single>
+    <panel>
+      <html>
+        Here is a submit button in a panel <br />
+        <div id="search_btn"></div>
+      </html>
+    </panel>
   </row>
-  
   <row>
-    <chart id="chart">
-      <searchPostProcess>
-	timechart count(source) AS Sources
-      </searchPostProcess>
-    </chart>
+    <panel>
+      <single id="single">
+        <title>Source Count</title>
+        <search base="global">
+          <query>stats dc(source) AS Sources</query>
+        </search>
+        <option name="underLabel">Sources</option>
+      </single>
+      <html>
+	      <div style="float: right">
+		      <img id="imgToggle1" class="toggle" title="Show/hide host processor details" src="/static/app/ToggleExample/expand.png"/>
+	      </div>
+	    </html>
+    </panel>
   </row>
-  
+  <row id="chart1">
+    <panel>
+      <chart>
+        <search base="global">
+          <query>timechart count(source) AS Sources</query>
+        </search>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <search base="global">
+          <query>timechart count(source) AS Sources</query>
+        </search>
+      </chart>
+    </panel>
+  </row>
   <row>
-    <html>
+    <panel>
+      <html>
       <p>Here is some HTML to show how the toggle expands between rows.</p>
     </html>
+    </panel>
   </row>
-  
-</dashboard>
+</form>
